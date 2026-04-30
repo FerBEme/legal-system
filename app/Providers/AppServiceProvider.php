@@ -1,8 +1,10 @@
 <?php
 namespace App\Providers;
+use App\Models\CaseModel;
 use App\Models\Customer;
 use App\Models\Specialty;
 use App\Models\User;
+use App\Policies\CaseModelPolicy;
 use App\Policies\CustomerPolicy;
 use App\Policies\SpecialtyPolicy;
 use App\Policies\UserPolicy;
@@ -18,5 +20,6 @@ class AppServiceProvider extends ServiceProvider {
         User::class => UserPolicy::class,
         Specialty::class => SpecialtyPolicy::class,
         Customer::class => CustomerPolicy::class,
+        CaseModel::class => CaseModelPolicy::class,
     ];
 }

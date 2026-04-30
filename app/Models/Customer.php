@@ -26,4 +26,7 @@ class Customer extends Model {
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
+    public function cases(){
+        return $this->hasMany(CaseModel::class,'customer_id');
+    }
 }
