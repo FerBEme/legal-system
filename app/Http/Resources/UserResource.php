@@ -22,6 +22,7 @@ class UserResource extends JsonResource {
             'created_at' => $this->whenHas('created_at'),
             'updated_at' => $this->whenHas('updated_at'),
             'lawyer' => UserResource::make($this->whenLoaded('lawyer')),
+            'specialties' => SpecialtyResource::collection($this->whenLoaded('specialties')),
         ];
     }
 }

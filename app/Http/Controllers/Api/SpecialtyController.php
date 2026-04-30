@@ -7,7 +7,6 @@ use App\Http\Resources\SpecialtyResource;
 use App\Models\Specialty;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 class SpecialtyController extends Controller {
     public function index() {
@@ -20,43 +19,34 @@ class SpecialtyController extends Controller {
     }
     public function store(StoreSpecialtyRequest $request) {
         Gate::authorize('create',Specialty::class);
-        $userAuth = Auth::guard('api')->user();
         $lawyersArray = User::whereRole('lawyer')->pluck('id')->toArray();
         $data = $request->validated();
         if(!empty($data['parent_id'])){
             $levelPadre = Specialty::whereId($data['parent_id'])->first()->level;
             $data['level'] = $levelPadre + 1;
         }
-        if($userAuth->role === 'lawyer')
-            $data['lawyers'] = $userAuth->id;
         if(!empty($data['lawyers']) && !in_array($data['lawyers'],$lawyersArray))
             abort(403,'Debe escoger a los abogados del sistema');
         $lawyers = $data['lawyers'] ?? [];
         unset($data['lawyers']);
         $specialty = Specialty::create($data);
         if($specialty->level !== 3)
-            abort(403,'Solamente se pueden cruzar lo de level 3');        
+            abort(403,'Solamente se pueden cruzar lo de level 3');       
         $specialty->lawyers()->sync($lawyers);
-        if($userAuth->role === 'admin') return SpecialtyResource::make($specialty->load(['mainBranch','lawyers']));
-        if($userAuth->role === 'lawyer') return SpecialtyResource::make($specialty->load('mainBranch'));
+        return SpecialtyResource::make($specialty->load(['mainBranch','lawyers']));
     }
     public function show(Specialty $specialty) {
         Gate::authorize('view',$specialty);
-        $userAuth = Auth::guard('api')->user();
-        if($userAuth->role === 'admin') return SpecialtyResource::make($specialty->load(['mainBranch','lawyers']));
-        if($userAuth->role === 'lawyer') return SpecialtyResource::make($specialty->load('mainBranch'));
+        return SpecialtyResource::make($specialty->load(['mainBranch','lawyers']));
     }
     public function update(UpdateSpecialtyRequest $request, Specialty $specialty) {
         Gate::authorize('update',$specialty);
-        $userAuth = Auth::guard('api')->user();
         $lawyersArray = User::whereRole('lawyer')->pluck('id')->toArray();
         $data = $request->validated();
         if(!empty($data['parent_id'])){
             $levelPadre = Specialty::whereId($data['parent_id'])->first()->level;
             $data['level'] = $levelPadre + 1;
         }
-        if($userAuth->role === 'lawyer')
-            $data['lawyers'] = $userAuth->id;
         if(!empty($data['lawyers']) && !in_array($data['lawyers'],$lawyersArray))
             abort(403,'Debe escoger a los abogados del sistema');
         $lawyers = $data['lawyers'] ?? [];
@@ -65,8 +55,7 @@ class SpecialtyController extends Controller {
         if($specialty->level !== 3)
             abort(403,'Solamente se pueden cruzar lo de level 3');        
         $specialty->lawyers()->sync($lawyers);
-        if($userAuth->role === 'admin') return SpecialtyResource::make($specialty->load(['mainBranch','lawyers']));
-        if($userAuth->role === 'lawyer') return SpecialtyResource::make($specialty->load('mainBranch'));
+        return SpecialtyResource::make($specialty->load(['mainBranch','lawyers']));
     }
     public function destroy(Specialty $specialty) {
         Gate::authorize('delete',$specialty);

@@ -19,6 +19,8 @@ class StoreUserRequest extends FormRequest {
             'role' => 'required|in:admin,lawyer,secretary',
             'tuition_number' => 'nullable|numeric|max_digits:10',
             'lawyer_id' => 'nullable|integer|exists:users,id',
+            'specialties' => 'nullable|array',
+            'specialties.*' => 'exists:specialties,id'
         ];
     }
 }

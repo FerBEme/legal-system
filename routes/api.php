@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CaseModelController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\FolderController;
 use App\Http\Controllers\Api\SpecialtyController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthController;
@@ -16,6 +17,7 @@ Route::middleware('auth:api')->group(function(){
     Route::apiResource('specialties',SpecialtyController::class);
     Route::apiResource('customers',CustomerController::class);
     Route::apiResource('cases',CaseModelController::class);
+    Route::apiResource('folders',FolderController::class);
 
     Route::post('users/{user}/restore',[UserController::class,'restore'])->withTrashed();
     Route::delete('users/{user}/force_delete',[UserController::class,'forceDelete'])->withTrashed();
@@ -25,4 +27,6 @@ Route::middleware('auth:api')->group(function(){
     Route::delete('customers/{customer}/force_delete',[CustomerController::class,'forceDelete'])->withTrashed();
     Route::post('cases/{case}/restore',[CaseModelController::class,'restore'])->withTrashed();
     Route::delete('cases/{case}/force_delete',[CaseModelController::class,'forceDelete'])->withTrashed();
+    Route::post('folders/{folder}/restore',[FolderController::class,'restore'])->withTrashed();
+    Route::delete('folders/{folder}/force_delete',[FolderController::class,'forceDelete'])->withTrashed();
 });

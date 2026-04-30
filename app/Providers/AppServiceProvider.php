@@ -1,13 +1,5 @@
 <?php
 namespace App\Providers;
-use App\Models\CaseModel;
-use App\Models\Customer;
-use App\Models\Specialty;
-use App\Models\User;
-use App\Policies\CaseModelPolicy;
-use App\Policies\CustomerPolicy;
-use App\Policies\SpecialtyPolicy;
-use App\Policies\UserPolicy;
 use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider {
     public function register(): void {
@@ -16,10 +8,4 @@ class AppServiceProvider extends ServiceProvider {
     public function boot(): void {
         //
     }
-    protected array $policies = [
-        User::class => UserPolicy::class,
-        Specialty::class => SpecialtyPolicy::class,
-        Customer::class => CustomerPolicy::class,
-        CaseModel::class => CaseModelPolicy::class,
-    ];
 }
