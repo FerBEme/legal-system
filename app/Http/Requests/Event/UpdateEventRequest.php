@@ -1,29 +1,19 @@
 <?php
-
 namespace App\Http\Requests\Event;
-
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-
-class UpdateEventRequest extends FormRequest
-{
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
+class UpdateEventRequest extends FormRequest {
+    public function authorize(): bool {
+        return true;
     }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'event_type' => 'required|in:audience,client_meeting,task',
+            'start_date' => 'required|date',
+            'end_date' => 'nullable|date|after:start_date',
+            'meeting_link' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'case_id' => 'nullable|exists:cases,id',
         ];
     }
 }

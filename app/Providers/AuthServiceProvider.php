@@ -2,12 +2,14 @@
 namespace App\Providers;
 use App\Models\CaseModel;
 use App\Models\Customer;
+use App\Models\Event;
 use App\Models\File;
 use App\Models\Folder;
 use App\Models\Specialty;
 use App\Models\User;
 use App\Policies\CaseModelPolicy;
 use App\Policies\CustomerPolicy;
+use App\Policies\EventPolicy;
 use App\Policies\FilePolicy;
 use App\Policies\FolderPolicy;
 use App\Policies\SpecialtyPolicy;
@@ -27,5 +29,6 @@ class AuthServiceProvider extends ServiceProvider {
         CaseModel::class => CaseModelPolicy::class,
         Folder::class => FolderPolicy::class,
         File::class => FilePolicy::class,
+        Event::class => EventPolicy::class,
     ];
 }
