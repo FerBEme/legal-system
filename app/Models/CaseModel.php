@@ -43,4 +43,7 @@ class CaseModel extends Model {
     public function folders(){
         return $this->hasMany(Folder::class,'case_id');
     }
+    public function events(){
+        return $this->hasMany(Event::class,'case_id');
+    }
 }

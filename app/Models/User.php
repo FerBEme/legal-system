@@ -53,4 +53,10 @@ class User extends Authenticatable implements JWTSubject{
     public function cases(){
         return $this->hasMany(CaseModel::class,'lawyer_id');
     }
+    public function files(){
+        return $this->hasMany(File::class,'uploaded_by');
+    }
+    public function events(){
+        return $this->hasMany(Event::class,'created_by');
+    }
 }

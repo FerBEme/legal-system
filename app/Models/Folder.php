@@ -21,4 +21,7 @@ class Folder extends Model {
     public function numberCase(){
         return $this->belongsTo(CaseModel::class,'case_id');
     }
+    public function files(){
+        return $this->hasMany(File::class,'folder_id');
+    }
 }
