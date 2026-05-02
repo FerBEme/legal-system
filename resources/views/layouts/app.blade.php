@@ -4,38 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://kit.fontawesome.com/03ed6c0fda.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="bg-gray-50 flex justify-between">
-    <section class="fixed top-0 left-0 w-64 h-full bg-gray-800 p-4 space-y-4">
-        <div class="flex justify-center">
-            <img class="w-full rounded-full" src="{{asset('storage/images/logo_company.png')}}" alt="logo">
-        </div>
-        <div>
-            <ul>
-                <li>
-                    <a href="#" class="flex justify-start items-center text-lg rounded-2xl p-4 bg-gray-900 text-white hover:bg-gray-300 hover:font-bold hover:text-black">
-                        <i class="fa-solid fa-gauge mr-4"></i> Dashboard
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </section>
-    <main>
-        <div>{{$slot}}</div>
+    @include('components.aside')
+    <main class="flex-1 ml-64 min-h-screen flex justify-center">
+        <div class="w-full max-w-6xl p-6">{{$slot}}</div>
     </main>
-    <section>
-        <div>
-            <img src="" alt="">
-            <h2></h2>
-            <p></p>
-        </div>
-        <div>
-            <ul>
-                <li></li>
-            </ul>
-        </div>
-    </section>
+    @include('components.navigate')
+</div>
+<script>
+    const btn = document.getElementById('userBtn');
+    const menu = document.getElementById('userDropDown');
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target) && !btn.contains(e.target)) {
+            menu.classList.add('hidden');
+        }
+    });
+</script>
 </body>
 </html>
